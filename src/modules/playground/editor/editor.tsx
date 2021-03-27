@@ -75,6 +75,7 @@ export const Editor: FC<EditorProps> = ({
         handles?.root?.(editor)
         editorRef.current = editor
         editor.setSize('100%', '100%')
+        editor.setValue( value + "\n".repeat(10) )
         // Hacky, but needed to get editor
         // to size properly after mount
         setTimeout(() => {
@@ -84,7 +85,7 @@ export const Editor: FC<EditorProps> = ({
       options={{
         theme,
         mode,
-        lineNumbers,
+        lineNumbers: true,
         tabSize,
         readOnly
       }}

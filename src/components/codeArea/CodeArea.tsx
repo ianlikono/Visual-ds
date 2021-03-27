@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Stack,
@@ -15,6 +15,8 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/dracula.css'
 import { PlayCircleTwoTone } from '@ant-design/icons';
 import { motion, useAnimation } from "framer-motion"
+import { JSHINT, LintError, LintOptions } from 'jshint';
+
 
 
 // import 'codemirror/theme/seti.css'
@@ -46,6 +48,8 @@ import useDataJs from '!!raw-loader!./assets/useData.txt'
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import stylesCss from '!!raw-loader!./assets/styles.txt'
 import { checkElemType } from '../../utils/customVm'
+import { createStack } from '../../utils/clean';
+import { lintBLock } from '../../utils/Lint';
 
 const importMap = SkypackImportMap({
   react: 'latest',
@@ -77,7 +81,6 @@ const CodeArea = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [theme] = useState('dracula')
   const controls = useAnimation()
-  const [codeElems, setCodeElems] = useState("");
   const [files, setFiles] = useState([
     {
       path: 'index.js',
@@ -88,42 +91,55 @@ const CodeArea = () => {
       contents: utilsJs
     },
   ])
-  const {} = useState();
+  const { } = useState();
   const [active, setActive] = useState('index.js')
   const [highlight, setHighlight] = useState<FileHighlight | null>(null)
   const [scale, setScale] = useState<number>(1)
-  const colors = useThemeColors(theme)
+  const colors = useThemeColors(theme);
+  const [rawStack, setRawStack] = useState<string[]>([]);
+ const [lintErrors, setLintErrors] = useState<LintError[]>([])
 
-  const updateFile = (file: SourceFile) => {
-    const {contents} = file;
-    console.log(contents);
 
-    setFiles((prev) =>
-      prev.map((f) => {
-        if (f.path === file.path) {
-          return file
-        }
-        return f
-      })
-    )
-    setCodeElems(file.contents)
+  useEffect(() => {
+    console.log('beforeraw', stackStr)
+    if(rawStack.length < 1) {
+      addEmptyLines();
+    }
+  }, [rawStack])
+
+  function addEmptyLines() {
+    const minLines = 10;
+    let startingValue = '';
+    for (let i = 0; i < minLines; i++) {
+        startingValue += '\n';
+    }
+    const emptyEditorStack = startingValue.split('\n');
+    setRawStack(emptyEditorStack)
   }
 
-  const utilsFile = files.find((f) => f.path === 'utils.js') as SourceFile
-  const containerFile = files.find(
-    (f) => f.path === 'index.js'
-  ) as SourceFile
 
-  const runCode = (code: string) => {
-    setIsOpen(!isOpen)
-    console.log('isOpen', isOpen)
+  const updateFile = (codeItems: string) => {
+    // const cleanedStack = createStack(codeItems);
+    // const errors = lintBLock(cleanedStack);
+
+    // setRawStack(codeItems.split("\n"));
+    // setLintErrors(errors);
   }
+
+  // const runCode = (code: string) => {
+  //   setIsOpen(!isOpen)
+  //   console.log('isOpen', isOpen)
+  // }
+  const stackStr = rawStack.length >= 1 ? rawStack.join("") : "";
+
+  console.log('rawastack', stackStr)
 
   return (
     <>
 
       <Box position='fixed' w='50%' top={0} left={0} bottom={0}>
         <Playground
+          value={stackStr}
           active={active}
           onActiveChange={setActive}
           onLoading={() => console.log('loading')}
@@ -142,6 +158,7 @@ const CodeArea = () => {
           editorOptions={(file) => {
             const base = {}
             if (highlight && file.path === highlight.filePath) {
+              console.log('file', file)
               return {
                 ...base,
                 highlight: highlight.highlight
@@ -175,7 +192,7 @@ const CodeArea = () => {
           layout
           data-isopen={isOpen}
           initial={{ borderRadius: 50 }}
-          onClick={() => runCode(codeElems)}
+          // onClick={() => runCode(codeElems)}
           className="play"
           style={{
             bottom: 50,
@@ -183,9 +200,9 @@ const CodeArea = () => {
             zIndex: 10000000000,
             position: 'fixed',
 
-        }}
+          }}
         >
-          <PlayCircleTwoTone className="child"/>
+          <PlayCircleTwoTone className="child" />
           {/* <motion.div className = "play" layout style={{
             width: '40px',
             height: '40px',
@@ -203,7 +220,7 @@ const CodeArea = () => {
         top={0} right={0} bottom={0}
       >
         <Stack spacing={6}>
-          <h1 className = "codeError">React ESM Sandbox Demo</h1>
+          <h1 className="codeError">React ESM Sandbox Demo</h1>
           <Text size='sm'>
             In this mini tutorial, we'll build a special container that rotates
             on hover. Try hovering over the image to the right and take note of

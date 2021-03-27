@@ -18,7 +18,8 @@ import { SourceFile } from '../types/types'
 
 export interface PlaygroundProps
   extends Omit<SandboxProps, 'components' | 'styles' | 'classes' | 'handles'>,
-    Omit<EditorGroupProps, 'components' | 'styles' | 'handles' | 'classes'> {
+  Omit<EditorGroupProps, 'components' | 'styles' | 'handles' | 'classes'> {
+  value: string
   layout?: PlaygroundLayout
   tabs?: string[]
   components?: {
@@ -68,7 +69,8 @@ export const Playground = ({
   styles,
   data,
   editorOptions = () => undefined,
-  handles
+  handles,
+  value
 }: PlaygroundProps) => {
   const interpreterRef = useRef<any>(null)
 
@@ -109,6 +111,7 @@ export const Playground = ({
     <div className={rootClasses} style={styles?.root}>
       <div className={_classes.editorGroupContainer}>
         <EditorGroup
+          value={value}
           files={editorGroupFiles}
           active={active}
           onFileChange={onFileChange}

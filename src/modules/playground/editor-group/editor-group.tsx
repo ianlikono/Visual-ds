@@ -123,9 +123,10 @@ interface EditorOptions {
 export type GetEditorOptions = (file: SourceFile) => EditorOptions | undefined
 
 export interface EditorGroupProps {
+  value: string
   active: string
   files: SourceFile[]
-  onFileChange?: (file: SourceFile) => void
+  onFileChange?: (code: string) => void
   onActiveChange?: (path: string) => void
   theme?: string
   editorOptions?: GetEditorOptions
@@ -163,7 +164,8 @@ export const EditorGroup: FC<EditorGroupProps> = ({
   handles,
   components,
   classes,
-  styles
+  styles,
+  value
 }) => {
   const editors = useEditors()
   const activeFile = files.find((file) => file.path === active)
@@ -182,10 +184,7 @@ export const EditorGroup: FC<EditorGroupProps> = ({
 
   const handleChange = (value: string) => {
     if (activeFile) {
-      onFileChange?.({
-        ...activeFile,
-        contents: value
-      })
+      onFileChange?.(value)
     }
   }
 
@@ -234,7 +233,8 @@ export const EditorGroup: FC<EditorGroupProps> = ({
                   classes?.editor
                 )
               }}
-              value={file.contents ?? ''}
+              // value={file.contents ?? ''}
+              value={value}
               onChange={handleChange}
               theme={theme}
               highlight={lint}
