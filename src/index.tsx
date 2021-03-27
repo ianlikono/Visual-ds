@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ChakraProvider, extendTheme } from "@chakra-ui/react"
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from './index/App';
+import reportWebVitals from './index/reportWebVitals';
 
 const customTheme = extendTheme({
   config: {

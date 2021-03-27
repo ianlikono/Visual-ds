@@ -1,4 +1,6 @@
-# Visual Structures on the Browser
+[![file structure: destiny](https://img.shields.io/badge/file%20structure-destiny-7a49ff?style=flat)](https://github.com/benawad/destiny)
+
+ Visual Structures on the Browser
 Remember when you fast saw a program doing something and wish you could somehow make one that does that? You get into coding write the cool hello worlds, follow the tutorials and now you feel you are ready.
 
 Jump into the project of your dreams and the the first thing you experience is this:
