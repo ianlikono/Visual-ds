@@ -18,7 +18,7 @@ You dig some developer accounts and twitter other developer forums and you final
 How is this related to looping through my array?
 
 #After  millions of `Cannot read property of undefined` and `array.map() is not a function` .
-You feel you one of the big boys and can tackle any programming problem presented. You open your email and you see an email from a recruiter from Microsoft. Two weeks later you have an interview scheduled and ready to show how good your skill really is.
+You feel you one of the `big boys` and can tackle any programming problem presented. You open your email and you see an email from a recruiter from Microsoft. Two weeks later you have an interview scheduled and ready to show how good your skill really is.
 
 #Interview 1 Question one.
 > Write an algorithm to remove duplicates in a linked list.
