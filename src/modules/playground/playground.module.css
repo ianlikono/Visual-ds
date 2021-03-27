@@ -1,0 +1,34 @@
+
+.root {
+    display: flex;
+    min-height: 300px;
+    height: 100%;
+}
+
+.vertical {
+    flex-direction: column;
+}
+
+.horizontal {
+    flex-direction: row;
+}
+
+.vertical .editorGroupContainer {
+    height: 50%;
+}
+
+.vertical  .interpreterContainer {
+    height: 50%;
+}
+
+.horizontal .editorGroupContainer {
+    width: 50%;
+}
+
+.horizontal  .interpreterContainer {
+    width: 50%;
+}
+
+.hide {
+    display: none;
+}

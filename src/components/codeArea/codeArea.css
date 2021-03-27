@@ -1,0 +1,21 @@
+.play {
+    /* background: white; */
+    width: '100px';
+    height: '100px';
+    display: 'flex';
+    justifyContent: 'center';
+    alignItems: 'center';
+    font-size: 'calc(45px + (90 - 45) * ((100vw - 300px) / (1600 - 300)))';
+  }
+
+  .play[data-isOpen="true"] {
+    width: 300px;
+    height: 300px;
+  }
+
+  .child {
+    width: '40px';
+    height: '40px';
+    background: '#f107a3';
+    borderRadius: '50%';
+  }
